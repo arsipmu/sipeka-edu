@@ -1,0 +1,200 @@
+---
+// src/components/BeritaSection.astro
+import { getCollection } from 'astro:content';
+import tagsData from '../data/tags.json';
+
+const allBerita = await getCollection('berita');
+const recentBerita = allBerita
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+function getTagColor(tagSlug: string) {
+  const tag = tagsData.tags.find(t => t.slug === tagSlug);
+  return tag ? tag.color : 'var(--accent)';
+}
+---
+<section id="berita" class="berita-section">
+  <div class="container">
+    <div class="section-header-flex">
+      <div>
+        <h2 class="section-title">Berita & Edukasi</h2>
+        <p class="section-desc">Informasi terbaru seputar kegiatan pencegahan kekerasan seksual.</p>
+      </div>
+      <a href="/berita" class="btn btn-secondary">
+        Lihat Semua Berita
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+    </div>
+
+    <div class="berita-grid">
+      {recentBerita.map(berita => (
+        <article class="berita-card surface">
+          <a href={`/berita/${berita.slug}`} class="berita-img-wrapper">
+            {berita.data.coverImage ? (
+              <img src={berita.data.coverImage} alt={berita.data.title} class="berita-img" />
+            ) : (
+              <div class="berita-img-placeholder">SIPEKA EDU</div>
+            )}
+          </a>
+          <div class="berita-content">
+            <div class="berita-meta">
+              <span 
+                class="berita-tag" 
+                style={`background-color: ${getTagColor(berita.data.category)}15; color: ${getTagColor(berita.data.category)}; border: 1px solid ${getTagColor(berita.data.category)}40;`}
+              >
+                {tagsData.tags.find(t => t.slug === berita.data.category)?.name || berita.data.category}
+              </span>
+              <time class="berita-date" datetime={berita.data.date.toISOString()}>
+                {berita.data.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+              </time>
+            </div>
+            <h3 class="berita-title">
+              <a href={`/berita/${berita.slug}`}>{berita.data.title}</a>
+            </h3>
+            <p class="berita-excerpt">{berita.data.excerpt}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .berita-section {
+    padding: 6rem 0;
+    background-color: var(--surface-color);
+  }
+
+  html.dark .berita-section {
+    background-color: var(--bg-color);
+  }
+
+  .section-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-desc {
+    color: var(--text-primary);
+    font-size: 1.125rem;
+    margin: 0;
+  }
+
+  .berita-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .berita-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .berita-img-wrapper {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+    background-color: var(--bg-color);
+  }
+
+  .berita-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .berita-img-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.5rem;
+    opacity: 0.3;
+  }
+
+  .berita-card:hover .berita-img {
+    transform: scale(1.05);
+  }
+
+  .berita-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .berita-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .berita-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .berita-date {
+    color: var(--text-primary);
+  }
+
+  .berita-title {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+  }
+
+  .berita-title a {
+    color: var(--text-heading);
+  }
+
+  .berita-title a:hover {
+    color: var(--accent);
+  }
+
+  .berita-excerpt {
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .section-header-flex {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+  }
+</style>

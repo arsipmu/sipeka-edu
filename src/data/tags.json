@@ -1,0 +1,28 @@
+{
+  "tags": [
+    {
+      "id": "edukasi",
+      "name": "Edukasi",
+      "slug": "edukasi",
+      "color": "#239ba7"
+    },
+    {
+      "id": "kegiatan",
+      "name": "Kegiatan",
+      "slug": "kegiatan",
+      "color": "#3b82f6"
+    },
+    {
+      "id": "pengumuman",
+      "name": "Pengumuman",
+      "slug": "pengumuman",
+      "color": "#f59e0b"
+    },
+    {
+      "id": "sop-ppks",
+      "name": "SOP PPKS",
+      "slug": "sop-ppks",
+      "color": "#10b981"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+---
+// src/components/Profil.astro
+---
+<section id="profil" class="profil-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Nilai & Pilar SIPEKA</h2>
+      <p class="section-desc">Membangun ekosistem pendidikan yang aman melalui pencegahan proaktif dan penanganan komprehensif.</p>
+    </div>
+
+    <div class="pilar-grid">
+      <div class="pilar-card surface">
+        <div class="pilar-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        </div>
+        <h3 class="pilar-title">Pencegahan Proaktif</h3>
+        <p class="pilar-desc">Edukasi berkelanjutan dan sosialisasi SOP PPKS kepada seluruh civitas akademika pesantren.</p>
+      </div>
+
+      <div class="pilar-card surface">
+        <div class="pilar-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <h3 class="pilar-title">Pelaporan Aman</h3>
+        <p class="pilar-desc">Sistem pelaporan terenkripsi yang menjamin kerahasiaan identitas korban dan pelapor.</p>
+      </div>
+
+      <div class="pilar-card surface">
+        <div class="pilar-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+        </div>
+        <h3 class="pilar-title">Penanganan Tuntas</h3>
+        <p class="pilar-desc">Pendampingan psikologis, medis, dan hukum hingga kasus terselesaikan dengan adil.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .profil-section {
+    padding: 6rem 0;
+    background-color: var(--surface-color);
+  }
+
+  html.dark .profil-section {
+    background-color: var(--bg-color);
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 4rem;
+  }
+
+  .section-title {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-desc {
+    color: var(--text-primary);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .pilar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .pilar-card {
+    padding: 2.5rem 2rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pilar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background-color: var(--accent-light);
+    color: var(--accent);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+  }
+
+  .pilar-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .pilar-desc {
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>

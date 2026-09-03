@@ -1,0 +1,18 @@
+{
+  "dokumen": [
+    {
+      "id": "sop-utama",
+      "title": "SOP PPKS PP Nurulhuda Cibojong",
+      "description": "Standar Operasional Prosedur resmi Pencegahan dan Penanganan Kekerasan Seksual.",
+      "fileUrl": "/dokumen/sop-ppks.pdf",
+      "type": "pdf"
+    },
+    {
+      "id": "panduan-aplikasi",
+      "title": "Buku Panduan Aplikasi SIPEKA",
+      "description": "Petunjuk teknis penggunaan sistem pelaporan online SIPEKA.",
+      "fileUrl": "#",
+      "type": "pdf"
+    }
+  ]
+}

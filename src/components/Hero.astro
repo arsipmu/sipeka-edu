@@ -1,0 +1,137 @@
+---
+// src/components/Hero.astro
+---
+<section class="hero-section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <div class="hero-badge animate-fade-in" style="animation-delay: 0.1s;">
+        <span class="badge-dot"></span>
+        Sistem Perlindungan Terpadu
+      </div>
+      <h1 class="hero-title animate-fade-in" style="animation-delay: 0.2s;">
+        Wujudkan Ruang Belajar <span class="text-accent">Aman & Bebas Kekerasan</span>
+      </h1>
+      <p class="hero-subtitle animate-fade-in" style="animation-delay: 0.3s;">
+        SIPEKA (Sistem Pencegahan & Penanganan Kekerasan Seksual) hadir untuk melindungi, mendampingi, dan memastikan keadilan bagi setiap santri dan peserta didik.
+      </p>
+      <div class="hero-actions animate-fade-in" style="animation-delay: 0.4s;">
+        <a href="http://sipeka-pontren.id/login" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Lapor Sekarang
+        </a>
+        <a href="#panduan" class="btn btn-secondary btn-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Pelajari SOP
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bg-pattern"></div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    padding: 8rem 0 6rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 80vh;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    opacity: 0;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--accent-light);
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+  }
+
+  .text-accent {
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    opacity: 0;
+  }
+
+  .btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+
+  .hero-bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 32px 32px;
+    opacity: 0.5;
+    z-index: 1;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  @media (max-width: 640px) {
+    .hero-section {
+      padding: 6rem 0 4rem;
+      min-height: auto;
+    }
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .btn-lg {
+      width: 100%;
+    }
+  }
+</style>
