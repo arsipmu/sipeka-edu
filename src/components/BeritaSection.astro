@@ -29,7 +29,7 @@ function getTagColor(tagSlug: string) {
     <div class="berita-grid">
       {recentBerita.map(berita => (
         <article class="berita-card surface">
-          <a href={`/berita/${berita.slug}`} class="berita-img-wrapper">
+          <a href={`/sipeka-edu/berita/${berita.slug}`} class="berita-img-wrapper">
             {berita.data.coverImage ? (
               <img src={berita.data.coverImage} alt={berita.data.title} class="berita-img" />
             ) : (
@@ -49,7 +49,7 @@ function getTagColor(tagSlug: string) {
               </time>
             </div>
             <h3 class="berita-title">
-              <a href={`/berita/${berita.slug}`}>{berita.data.title}</a>
+              <a href={`/sipeka-edu/berita/${berita.slug}`}>{berita.data.title}</a>
             </h3>
             <p class="berita-excerpt">{berita.data.excerpt}</p>
           </div>
