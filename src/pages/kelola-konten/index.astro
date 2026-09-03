@@ -270,58 +270,49 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     }
   </style>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Setup Crypto Hashing (SHA-256)
-      async function hashSHA256(message: string) {
-        const msgBuffer = new TextEncoder().encode(message);                    
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        return hashHex;
-      }
-
-      // Expected Hash for "sipeka2026"
-      // echo -n "sipeka2026" | sha256sum -> 206b8bd7c170a4a6211d2e13271bc97858c2f1f416c878d655f5f4a7c86e0825
-      const EXPECTED_HASH = "206b8bd7c170a4a6211d2e13271bc97858c2f1f416c878d655f5f4a7c86e0825";
+  <script is:inline>
+    // Setup Direct & Safe Auth Check
+    function initAuth() {
+      const EXPECTED_PIN = "sipeka2026";
+      const AUTH_STORAGE_KEY = "sipeka_admin_auth";
 
       const authModal = document.getElementById('authModal');
-      const authPin = document.getElementById('authPin') as HTMLInputElement;
+      const authPin = document.getElementById('authPin');
       const authBtn = document.getElementById('authBtn');
       const authError = document.getElementById('authError');
       const cmsContent = document.getElementById('cmsContent');
       const authStatus = document.getElementById('authStatus');
 
-      async function verifyAuth() {
-        const pin = authPin.value;
-        if (!pin) return;
-        
-        const hash = await hashSHA256(pin);
-        
-        // Timing Safe Equal equivalent in client side (simulasi konstan time comparison)
-        let isMatch = true;
-        if (hash.length !== EXPECTED_HASH.length) isMatch = false;
-        
-        let diff = 0;
-        for (let i = 0; i < Math.min(hash.length, EXPECTED_HASH.length); i++) {
-            diff |= hash.charCodeAt(i) ^ EXPECTED_HASH.charCodeAt(i);
+      function grantAccess() {
+        if (authModal) {
+          authModal.classList.remove('open');
+          authModal.style.display = 'none';
         }
-        
-        if (isMatch && diff === 0) {
-          // Success
-          authModal?.classList.remove('open');
-          if (cmsContent) {
-            cmsContent.style.opacity = '1';
-            cmsContent.style.pointerEvents = 'auto';
-          }
-          if (authStatus) {
-            authStatus.innerHTML = '<span class="status-indicator success"></span><span class="status-text">Terverifikasi (Admin)</span>';
-          }
+        if (cmsContent) {
+          cmsContent.style.opacity = '1';
+          cmsContent.style.pointerEvents = 'auto';
+        }
+        if (authStatus) {
+          authStatus.innerHTML = '<span class="status-indicator success"></span><span class="status-text">Terverifikasi (Admin)</span>';
+        }
+        sessionStorage.setItem(AUTH_STORAGE_KEY, "authenticated");
+      }
+
+      // Check session
+      if (sessionStorage.getItem(AUTH_STORAGE_KEY) === "authenticated") {
+        grantAccess();
+      }
+
+      function verifyAuth() {
+        const pin = authPin ? authPin.value.trim() : '';
+        if (pin === EXPECTED_PIN) {
+          grantAccess();
         } else {
-          // Failed
           if (authError) authError.style.display = 'block';
-          authPin.value = '';
-          authPin.focus();
+          if (authPin) {
+            authPin.value = '';
+            authPin.focus();
+          }
         }
       }
 
@@ -350,6 +341,12 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
           });
         });
       });
-    });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAuth);
+    } else {
+      initAuth();
+    }
   </script>
 </AdminLayout>
