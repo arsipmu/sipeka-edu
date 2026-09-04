@@ -342,14 +342,16 @@ function getTagName(categoryName: string) {
 
     function filterArticles() {
       let visibleCount = 0;
+      const normalizedTag = currentTag.toLowerCase().trim();
+      const normalizedSearch = searchQuery.toLowerCase().trim();
       
       articles.forEach((article: any) => {
-        const category = article.getAttribute('data-category');
-        const title = article.querySelector('.berita-title')?.textContent?.toLowerCase() || '';
-        const excerpt = article.querySelector('.berita-excerpt')?.textContent?.toLowerCase() || '';
+        const category = (article.getAttribute('data-category') || '').toLowerCase().trim();
+        const title = (article.querySelector('.berita-title')?.textContent || '').toLowerCase();
+        const excerpt = (article.querySelector('.berita-excerpt')?.textContent || '').toLowerCase();
         
-        const matchTag = currentTag === 'all' || category === currentTag;
-        const matchSearch = title.includes(searchQuery) || excerpt.includes(searchQuery);
+        const matchTag = normalizedTag === 'all' || category === normalizedTag;
+        const matchSearch = !normalizedSearch || title.includes(normalizedSearch) || excerpt.includes(normalizedSearch);
         
         if (matchTag && matchSearch) {
           article.classList.remove('hidden');
@@ -369,10 +371,10 @@ function getTagName(categoryName: string) {
     // Tag Filter
     filterBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
+        const target = e.currentTarget as HTMLElement;
         filterBtns.forEach(b => b.classList.remove('active'));
         target.classList.add('active');
-        currentTag = target.getAttribute('data-tag') || 'all';
+        currentTag = (target.getAttribute('data-tag') || 'all').toLowerCase().trim();
         filterArticles();
       });
     });

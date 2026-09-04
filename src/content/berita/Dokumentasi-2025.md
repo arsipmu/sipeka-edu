@@ -4,7 +4,7 @@ slug: "video-dokumentasi-pkm-sipeka-pesantren-nurul-huda"
 date: 2026-09-03T10:00:00.000Z
 category: "Edukasi"
 author: "Tim SIPEKA"
-coverImage: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80"
+coverImage: "/sipeka-edu/img/sipeka.png"
 excerpt: "Video dokumentasi rangkaian kegiatan Pengabdian kepada Masyarakat implementasi SIPEKA di Pesantren Nurul Huda, Cisurupan, Garut sebagai sistem pengaduan kekerasan seksual berbasis web."
 ---
 
