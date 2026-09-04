@@ -95,22 +95,35 @@ import '../styles/global.css';
         }
         .admin-sidebar {
           width: 100%;
+          max-width: 100%;
           height: auto;
           position: static;
           padding: 1rem;
           border-right: none;
           border-bottom: 1px solid var(--border-color);
+          box-sizing: border-box;
         }
         .admin-brand {
           margin-bottom: 1rem;
           padding-bottom: 0.5rem;
         }
         .admin-nav {
+          display: flex;
           flex-direction: row;
           flex-wrap: wrap;
+          gap: 0.5rem;
+          width: 100%;
+        }
+        .admin-nav-item {
+          flex: 1 1 auto;
+          justify-content: center;
+          padding: 0.6rem 0.8rem;
+          font-size: 0.875rem;
+          text-align: center;
         }
         .back-to-site {
           margin-top: 1rem;
+          width: 100%;
         }
       }
     </style>
