@@ -181,19 +181,23 @@
   .mobile-drawer {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 280px;
+    max-width: 80vw;
     height: 100vh;
+    height: 100dvh;
     background-color: var(--surface-color);
-    z-index: 100;
-    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.05);
-    transition: right var(--transition-normal);
+    z-index: 1000;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 
   .mobile-drawer.open {
-    right: 0;
+    transform: translateX(0);
   }
 
   .mobile-drawer-header {

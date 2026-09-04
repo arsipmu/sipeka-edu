@@ -1,6 +1,12 @@
 ---
 // src/pages/kelola-konten/index.astro
 import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getCollection } from 'astro:content';
+import tagsData from '../../data/tags.json';
+import panduanData from '../../data/panduan.json';
+
+const allBerita = await getCollection('berita');
+const sortedBerita = allBerita.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <AdminLayout title="Dashboard CMS">
@@ -55,31 +61,102 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
       <!-- Tab 1: Kelola Berita -->
       <section id="tab-berita" class="tab-pane active">
         <div class="flex-between mb-4">
-          <h2>Daftar Berita</h2>
+          <h2>Daftar Berita ({sortedBerita.length})</h2>
           <button id="btnTulisBerita" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             Tulis Berita
           </button>
         </div>
-        <div class="surface p-4 text-center text-muted">
-          <p>Fitur Manajemen Berita via GitHub API (Visual Editor)</p>
-          <p class="text-sm">Implementasi penuh membutuhkan endpoint API GitHub dan token PAT di environment variable.</p>
+        
+        <div class="cms-table-wrapper surface">
+          <table class="cms-table">
+            <thead>
+              <tr>
+                <th>Judul Berita</th>
+                <th>Kategori</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedBerita.map(berita => (
+                <tr>
+                  <td>
+                    <strong>{berita.data.title}</strong>
+                    <div class="text-xs text-muted">/{berita.slug}</div>
+                  </td>
+                  <td>
+                    <span class="badge" style={`color: ${tagsData.tags.find(t => t.slug === berita.data.category)?.color || 'var(--accent)'};`}>
+                      {tagsData.tags.find(t => t.slug === berita.data.category)?.name || berita.data.category}
+                    </span>
+                  </td>
+                  <td>{berita.data.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                  <td>
+                    <div class="action-buttons">
+                      <a href={`/sipeka-edu/berita/${berita.slug}`} target="_blank" class="btn btn-sm btn-outline">Lihat</a>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
       <!-- Tab 2: Kelola Tags -->
       <section id="tab-tags" class="tab-pane">
-        <h2>Kategori / Tags</h2>
-        <div class="surface p-4 text-center text-muted mt-4">
-          <p>Fitur Editor <code>src/data/tags.json</code></p>
+        <div class="flex-between mb-4">
+          <h2>Kategori & Tags ({tagsData.tags.length})</h2>
+        </div>
+        <div class="cms-table-wrapper surface">
+          <table class="cms-table">
+            <thead>
+              <tr>
+                <th>Nama Tag</th>
+                <th>Slug</th>
+                <th>Warna Badge</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tagsData.tags.map(tag => (
+                <tr>
+                  <td><strong>{tag.name}</strong></td>
+                  <td><code>{tag.slug}</code></td>
+                  <td>
+                    <span class="tag-color-pill" style={`background-color: ${tag.color};`}></span>
+                    <code>{tag.color}</code>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 
       <!-- Tab 3: Kelola Panduan -->
       <section id="tab-panduan" class="tab-pane">
-        <h2>Dokumen SOP</h2>
-        <div class="surface p-4 text-center text-muted mt-4">
-          <p>Fitur Editor <code>src/data/panduan.json</code></p>
+        <div class="flex-between mb-4">
+          <h2>Dokumen SOP & Panduan ({panduanData.dokumen.length})</h2>
+        </div>
+        <div class="cms-table-wrapper surface">
+          <table class="cms-table">
+            <thead>
+              <tr>
+                <th>Judul Dokumen</th>
+                <th>Deskripsi</th>
+                <th>File Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              {panduanData.dokumen.map(doc => (
+                <tr>
+                  <td><strong>{doc.title}</strong></td>
+                  <td>{doc.description}</td>
+                  <td><a href={doc.fileUrl} target="_blank" class="btn btn-sm btn-outline">Download PDF</a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
     </div>
@@ -267,6 +344,62 @@ import AdminLayout from '../../layouts/AdminLayout.astro';
     
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+    .tag-color-pill {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .cms-table-wrapper {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .cms-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .cms-table th, .cms-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .cms-table th {
+      background-color: var(--bg-color);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+    }
+
+    .cms-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .text-xs { font-size: 0.75rem; }
+    .text-muted { color: var(--text-primary); opacity: 0.8; }
+    
+    .btn-sm {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-heading);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background-color: var(--accent-light);
     }
   </style>
 

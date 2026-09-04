@@ -8,9 +8,24 @@ const recentBerita = allBerita
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-function getTagColor(tagSlug: string) {
-  const tag = tagsData.tags.find(t => t.slug === tagSlug);
-  return tag ? tag.color : 'var(--accent)';
+function getTagColor(categoryName: string) {
+  if (!categoryName) return '#239ba7';
+  const tag = tagsData.tags.find(
+    t => t.slug.toLowerCase() === categoryName.toLowerCase() || 
+         t.name.toLowerCase() === categoryName.toLowerCase() ||
+         t.id.toLowerCase() === categoryName.toLowerCase()
+  );
+  return tag ? tag.color : '#239ba7';
+}
+
+function getTagName(categoryName: string) {
+  if (!categoryName) return 'Umum';
+  const tag = tagsData.tags.find(
+    t => t.slug.toLowerCase() === categoryName.toLowerCase() || 
+         t.name.toLowerCase() === categoryName.toLowerCase() ||
+         t.id.toLowerCase() === categoryName.toLowerCase()
+  );
+  return tag ? tag.name : categoryName;
 }
 ---
 <section id="berita" class="berita-section">
@@ -40,9 +55,9 @@ function getTagColor(tagSlug: string) {
             <div class="berita-meta">
               <span 
                 class="berita-tag" 
-                style={`background-color: ${getTagColor(berita.data.category)}15; color: ${getTagColor(berita.data.category)}; border: 1px solid ${getTagColor(berita.data.category)}40;`}
+                style={`background-color: ${getTagColor(berita.data.category)}18; color: ${getTagColor(berita.data.category)}; border: 1px solid ${getTagColor(berita.data.category)}40;`}
               >
-                {tagsData.tags.find(t => t.slug === berita.data.category)?.name || berita.data.category}
+                {getTagName(berita.data.category)}
               </span>
               <time class="berita-date" datetime={berita.data.date.toISOString()}>
                 {berita.data.date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
