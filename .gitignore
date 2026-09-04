@@ -25,7 +25,8 @@ dist
 *.njsproj
 *.sln
 *.sw?
-berita
+# Temporary raw draft folder in root
+/berita/
 .vscode
 AGENTS.md
 REPORT.md
